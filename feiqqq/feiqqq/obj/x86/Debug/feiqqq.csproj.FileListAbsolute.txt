@@ -1,0 +1,7 @@
+D:\feiqqq\feiqqq\bin\Debug\feiqqq.exe
+D:\feiqqq\feiqqq\bin\Debug\feiqqq.pdb
+D:\feiqqq\feiqqq\obj\x86\Debug\feiqqq.Form1.resources
+D:\feiqqq\feiqqq\obj\x86\Debug\feiqqq.Properties.Resources.resources
+D:\feiqqq\feiqqq\obj\x86\Debug\feiqqq.csproj.GenerateResource.Cache
+D:\feiqqq\feiqqq\obj\x86\Debug\feiqqq.exe
+D:\feiqqq\feiqqq\obj\x86\Debug\feiqqq.pdb

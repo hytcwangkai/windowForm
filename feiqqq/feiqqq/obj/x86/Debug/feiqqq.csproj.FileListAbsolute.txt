@@ -5,3 +5,11 @@ D:\feiqqq\feiqqq\obj\x86\Debug\feiqqq.Properties.Resources.resources
 D:\feiqqq\feiqqq\obj\x86\Debug\feiqqq.csproj.GenerateResource.Cache
 D:\feiqqq\feiqqq\obj\x86\Debug\feiqqq.exe
 D:\feiqqq\feiqqq\obj\x86\Debug\feiqqq.pdb
+E:\windowForm\feiqqq\feiqqq\obj\x86\Debug\feiqqq.exe
+E:\windowForm\feiqqq\feiqqq\obj\x86\Debug\feiqqq.pdb
+E:\windowForm\feiqqq\feiqqq\bin\Debug\feiqqq.exe
+E:\windowForm\feiqqq\feiqqq\bin\Debug\feiqqq.pdb
+E:\windowForm\feiqqq\feiqqq\obj\x86\Debug\feiqqq.Form1.resources
+E:\windowForm\feiqqq\feiqqq\obj\x86\Debug\feiqqq.Properties.Resources.resources
+E:\windowForm\feiqqq\feiqqq\obj\x86\Debug\feiqqq.csproj.GenerateResource.Cache
+E:\windowForm\feiqqq\feiqqq\obj\x86\Debug\feiqqq.UCFriend.resources

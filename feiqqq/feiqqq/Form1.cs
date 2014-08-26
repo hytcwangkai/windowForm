@@ -14,21 +14,12 @@ namespace feiqqq
 {
     public partial class Form1 : Form
     {
+        public delegate void delAddFriend(Friend friend); 
         public Form1()
         {
             InitializeComponent();
         }
 
-        private void button1_Click(object sender, EventArgs e)
-        {
-            string ip=this.Iptext.Text;
-            UdpClient uc = new UdpClient();
-            string msg ="PUBLIC|"+ this.msg.Text+"|傻逼杰";
-            byte[] bmsg = Encoding.Default.GetBytes(msg);
-            IPEndPoint ipep = new IPEndPoint(IPAddress.Parse(ip),9527);
-            uc.Send(bmsg,bmsg.Length,ipep);
-
-        }
         private void listen() {
             UdpClient uc = new UdpClient(9527);
             while (true)
@@ -36,38 +27,49 @@ namespace feiqqq
                 IPEndPoint ipep = new IPEndPoint(IPAddress.Any, 0);
                 byte[] bmsg = uc.Receive(ref ipep);
                 string msg = Encoding.Default.GetString(bmsg);
-                string[] str = msg.Split('|');
-
-                if (str[0] == "PUBLIC" && str.Count()>=3)
+                string[] datas = msg.Split('|');
+                if (datas.Length != 4)
                 {
-                    this.txtHistory.AppendText(str[2] + ":" + str[1]+"\r\n");
+                    continue;
                 }
-                else if (str[0] == "INROOM" && str.Count()>=2)
+                if (datas[0] == "LOGIN") 
                 {
-                    this.txtHistory.AppendText(str[1] + "上线了！！！\r\n");
+                    Friend friend = new Friend();
+                    int curIndex = Convert.ToInt32(datas[2]);
+                    if (curIndex < 0 || curIndex >= this.ilHeaderImage.Images.Count)
+                    {
+                        curIndex = 0;
+                    }
+                    friend.HeaderImageIndex = curIndex;
+                    friend.Nickname = datas[1];
+                    friend.ShuoShuo = datas[3];
+                    delAddFriend delfriend = new delAddFriend(addUcf);
+                    this.plFriendsList.Invoke(delfriend,friend);
+                    
                 }
-                else 
-                {
-                    this.txtHistory.AppendText("有人发乱码了！！！\r\n");
-                }
+                              
             }
         }
         private void Form1_Load(object sender, EventArgs e)
         {
-            Form1.CheckForIllegalCrossThreadCalls = false;   
+            Form1.CheckForIllegalCrossThreadCalls = false;
+            //侦听
             Thread th = new Thread(new ThreadStart(listen));
+            Thread.Sleep(100);
             th.Start();
             th.IsBackground = true;
-        }
-
-        private void button2_Click(object sender, EventArgs e)
-        {
-            string ip = this.Iptext.Text;
+            //发广播
             UdpClient uc = new UdpClient();
-            string msg = "INROOM|傻逼杰";
+            string msg = "LOGIN|都比|12|大家好";
             byte[] bmsg = Encoding.Default.GetBytes(msg);
-            IPEndPoint ipep = new IPEndPoint(IPAddress.Parse(ip), 9527);
-            uc.Send(bmsg, bmsg.Length, ipep);
+            uc.Send(bmsg,bmsg.Length,new IPEndPoint(IPAddress.Parse("255.255.255.255"),9527));
+        }
+        public void addUcf(Friend f) 
+        {
+            UCFriend ucf = new UCFriend();
+            ucf.Top = this.plFriendsList.Controls.Count * ucf.Height;
+            ucf.CurFriend = f;
+            this.plFriendsList.Controls.Add(ucf);
         }
     }
 }

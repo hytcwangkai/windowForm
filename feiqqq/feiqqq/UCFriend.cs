@@ -28,6 +28,7 @@ namespace feiqqq
                 this.lbNikeName.Text = value.Nickname;
                 this.lbShuoShuo.Text = value.ShuoShuo;
                 this.picHeaderImage.Image=this.frm.ilHeaderImage.Images[value.HeaderImageIndex];
+              
             }
         }
         public UCFriend()
@@ -40,5 +41,16 @@ namespace feiqqq
 
         }
 
-    }
+        private void UCFriend_Click(object sender, EventArgs e)
+        {
+            FrmChat frmChat = new FrmChat();
+            frmChat.ChatFriend = this.curFriend;
+            if (frmChat.isOpen == false)
+            {
+                frmChat.Show();
+                frmChat.isOpen = true;
+            }
+         }
+
+    }   
 }

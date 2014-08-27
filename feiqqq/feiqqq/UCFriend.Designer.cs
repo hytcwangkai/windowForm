@@ -73,6 +73,7 @@
             this.Name = "UCFriend";
             this.Size = new System.Drawing.Size(300, 66);
             this.Load += new System.EventHandler(this.UCFriend_Load);
+            this.Click += new System.EventHandler(this.UCFriend_Click);
             ((System.ComponentModel.ISupportInitialize)(this.picHeaderImage)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();

@@ -14,59 +14,37 @@ namespace feiqqq
 {
     public partial class Form1 : Form
     {
-        public delegate void delAddFriend(Friend friend); 
+       
         public Form1()
         {
             InitializeComponent();
         }
-
-        private void listen() {
-            UdpClient uc = new UdpClient(9527);
-            while (true)
-            {
-                IPEndPoint ipep = new IPEndPoint(IPAddress.Any, 0);
-                byte[] bmsg = uc.Receive(ref ipep);
-                string msg = Encoding.Default.GetString(bmsg);
-                string[] datas = msg.Split('|');
-                if (datas.Length != 4)
-                {
-                    continue;
-                }
-                if (datas[0] == "LOGIN") 
-                {
-                    Friend friend = new Friend();
-                    int curIndex = Convert.ToInt32(datas[2]);
-                    if (curIndex < 0 || curIndex >= this.ilHeaderImage.Images.Count)
-                    {
-                        curIndex = 0;
-                    }
-                    friend.HeaderImageIndex = curIndex;
-                    friend.Nickname = datas[1];
-                    friend.ShuoShuo = datas[3];
-                    delAddFriend delfriend = new delAddFriend(addUcf);
-                    this.plFriendsList.Invoke(delfriend,friend);
-                    
-                }
-                              
-            }
-        }
         private void Form1_Load(object sender, EventArgs e)
         {
+            IPAddress myIp = Operation.getMyip();
+            if (myIp == null)
+            {
+                MessageBox.Show("对不起，网络连接失败，请检查网络连接");
+                Application.Exit();
+            }
             Form1.CheckForIllegalCrossThreadCalls = false;
+            Operation ope = new Operation(this);
             //侦听
-            Thread th = new Thread(new ThreadStart(listen));
+            Thread th = new Thread(new ThreadStart(ope.listen));
             Thread.Sleep(100);
             th.Start();
             th.IsBackground = true;
             //发广播
             UdpClient uc = new UdpClient();
-            string msg = "LOGIN|都比|12|大家好";
+            string myName = myIp.ToString();
+            string msg = "LOGIN|"+myName+"|13|大家好";
             byte[] bmsg = Encoding.Default.GetBytes(msg);
             uc.Send(bmsg,bmsg.Length,new IPEndPoint(IPAddress.Parse("255.255.255.255"),9527));
         }
         public void addUcf(Friend f) 
         {
             UCFriend ucf = new UCFriend();
+            ucf.Frm = this;
             ucf.Top = this.plFriendsList.Controls.Count * ucf.Height;
             ucf.CurFriend = f;
             this.plFriendsList.Controls.Add(ucf);

@@ -13,3 +13,5 @@ E:\windowForm\feiqqq\feiqqq\obj\x86\Debug\feiqqq.Form1.resources
 E:\windowForm\feiqqq\feiqqq\obj\x86\Debug\feiqqq.Properties.Resources.resources
 E:\windowForm\feiqqq\feiqqq\obj\x86\Debug\feiqqq.csproj.GenerateResource.Cache
 E:\windowForm\feiqqq\feiqqq\obj\x86\Debug\feiqqq.UCFriend.resources
+E:\windowForm\feiqqq\feiqqq\obj\x86\Debug\feiqqq.csprojResolveAssemblyReference.cache
+E:\windowForm\feiqqq\feiqqq\obj\x86\Debug\feiqqq.frmChat.resources

@@ -11,6 +11,7 @@ namespace feiqqq
 {
     public partial class UCFriend : UserControl
     {
+        public event EventHandler myDBClick;
         private Form1 frm;
         public Form1 Frm 
         {
@@ -41,16 +42,24 @@ namespace feiqqq
 
         }
 
-        private void UCFriend_Click(object sender, EventArgs e)
+        private void UCFriend_MouseDoubleClick(object sender, MouseEventArgs e)
         {
-            FrmChat frmChat = new FrmChat();
-            frmChat.ChatFriend = this.curFriend;
-            if (frmChat.isOpen == false)
-            {
-                frmChat.Show();
-                frmChat.isOpen = true;
-            }
-         }
+            this.myDBClick(sender,e);
+        }
 
+        private void picHeaderImage_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            this.myDBClick(this, e);
+        }
+
+        private void lbNikeName_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            this.myDBClick(this, e);
+        }
+
+        private void lbShuoShuo_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            this.myDBClick(this, e);
+        }
     }   
 }

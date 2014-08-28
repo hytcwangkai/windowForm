@@ -44,13 +44,13 @@
             // 
             resources.ApplyResources(this.txtChattingContent, "txtChattingContent");
             this.txtChattingContent.Name = "txtChattingContent";
-         
             // 
             // btnSend
             // 
             resources.ApplyResources(this.btnSend, "btnSend");
             this.btnSend.Name = "btnSend";
             this.btnSend.UseVisualStyleBackColor = true;
+            this.btnSend.Click += new System.EventHandler(this.btnSend_Click);
             // 
             // txtSendContent
             // 

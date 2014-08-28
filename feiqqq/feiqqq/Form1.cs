@@ -14,7 +14,10 @@ namespace feiqqq
 {
     public partial class Form1 : Form
     {
-       
+       public Panel getPanl()
+       {
+           return this.plFriendsList;
+       }
         public Form1()
         {
             InitializeComponent();
@@ -31,8 +34,9 @@ namespace feiqqq
             Operation ope = new Operation(this);
             //侦听
             Thread th = new Thread(new ThreadStart(ope.listen));
-            Thread.Sleep(100);
+           
             th.Start();
+            Thread.Sleep(100);
             th.IsBackground = true;
             //发广播
             UdpClient uc = new UdpClient();
@@ -45,9 +49,27 @@ namespace feiqqq
         {
             UCFriend ucf = new UCFriend();
             ucf.Frm = this;
-            ucf.Top = this.plFriendsList.Controls.Count * ucf.Height;
             ucf.CurFriend = f;
+            ucf.Top = this.plFriendsList.Controls.Count * ucf.Height;
+           ucf.myDBClick += ucf_myDBClick;
             this.plFriendsList.Controls.Add(ucf);
+        }
+        void ucf_myDBClick(object sender, EventArgs e) 
+        {
+            UCFriend ucf = (UCFriend)sender;
+            if (ucf.CurFriend.IsOpen == false)
+            {
+                FrmChat frm = new FrmChat(ucf.CurFriend);
+                frm.Show();
+                ucf.CurFriend.IsOpen = true;
+            }
+        }
+        private void Form1_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            UdpClient closeUcf = new UdpClient();
+            string clMsg = "LOGOUT";
+            byte[] clbmsg = Encoding.Default.GetBytes(clMsg);
+            closeUcf .Send(clbmsg, clbmsg .Length, new IPEndPoint(IPAddress.Parse("255.255.255.255"), 9527));
         }
     }
 }

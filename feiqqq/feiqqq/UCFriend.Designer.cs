@@ -44,6 +44,7 @@
             this.picHeaderImage.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.picHeaderImage.TabIndex = 0;
             this.picHeaderImage.TabStop = false;
+            this.picHeaderImage.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.picHeaderImage_MouseDoubleClick);
             // 
             // lbNikeName
             // 
@@ -53,6 +54,7 @@
             this.lbNikeName.Size = new System.Drawing.Size(41, 12);
             this.lbNikeName.TabIndex = 1;
             this.lbNikeName.Text = "label1";
+            this.lbNikeName.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.lbNikeName_MouseDoubleClick);
             // 
             // lbShuoShuo
             // 
@@ -62,6 +64,7 @@
             this.lbShuoShuo.Size = new System.Drawing.Size(41, 12);
             this.lbShuoShuo.TabIndex = 2;
             this.lbShuoShuo.Text = "label2";
+            this.lbShuoShuo.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.lbShuoShuo_MouseDoubleClick);
             // 
             // UCFriend
             // 
@@ -73,7 +76,7 @@
             this.Name = "UCFriend";
             this.Size = new System.Drawing.Size(300, 66);
             this.Load += new System.EventHandler(this.UCFriend_Load);
-            this.Click += new System.EventHandler(this.UCFriend_Click);
+            this.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.UCFriend_MouseDoubleClick);
             ((System.ComponentModel.ISupportInitialize)(this.picHeaderImage)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();

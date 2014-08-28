@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Net;
 using System.Net.Sockets;
+using System.Windows.Forms;
 namespace feiqqq
 {
     public class Operation
@@ -42,44 +43,71 @@ namespace feiqqq
                 {
                     case "LOGIN":
                         if (datas.Length != 4)
-                    {
-                        continue;
-                    }
-                    Friend friend = new Friend();
-                    int curIndex = Convert.ToInt32(datas[2]);
-                    if (curIndex < 0 || curIndex >= _frm.ilHeaderImage.Images.Count)
-                    {
-                        curIndex = 0;
-                    }
-                    friend.HeaderImageIndex = curIndex;
-                    friend.Nickname = datas[1];
-                    friend.ShuoShuo = datas[3];
-                    _frm.Invoke(new delAddFriend(_frm.addUcf), friend);
-                    //回发，告诉对方我也在
-                     IPAddress myIp = Operation.getMyip();
-                     UdpClient onuc = new UdpClient();
-                     string myName =myIp.ToString() ;
-                     string onmsg = "ALSOON|"+myName+"|13|大家好";
-                     byte[] onbmsg = Encoding.Default.GetBytes(msg);
-                     onuc.Send(onbmsg, onbmsg.Length, new IPEndPoint(ipep.Address, 9527));
-                    break;
+                        {
+                            continue;
+                        }
+                        Friend friend = new Friend();
+                        int curIndex = Convert.ToInt32(datas[2]);
+                        if (curIndex < 0 || curIndex >= _frm.ilHeaderImage.Images.Count)
+                        {
+                            curIndex = 0;
+                        }
+                        friend.HeaderImageIndex = curIndex;
+                        friend.Nickname = datas[1];
+                        friend.ShuoShuo = datas[3];
+                        friend.IP = ipep.Address;
+                        friend.IsOpen = false;
+                        IPAddress myIp = Operation.getMyip();
+                        if (myIp.ToString() != friend.IP.ToString())
+                        {
+                            _frm.Invoke(new delAddFriend(_frm.addUcf), friend);
+
+                            //回发，告诉对方我也在
+
+                            UdpClient onuc = new UdpClient();
+                            string myName = "王凯";
+                            string onmsg = "ALSOON|" + myName + "|13|大家好";
+                            byte[] onbmsg = Encoding.Default.GetBytes(onmsg);
+                            onuc.Send(onbmsg, onbmsg.Length, new IPEndPoint(ipep.Address, 9527));
+                        }
+                         break;
                        
                     case "ALSOON":
-                    if (datas.Length != 4)
-                    {
-                        continue;
-                    }
-                    Friend onfriend = new Friend();
-                    int oncurIndex = Convert.ToInt32(datas[2]);
-                    if (oncurIndex < 0 || oncurIndex >= _frm.ilHeaderImage.Images.Count)
-                    {
-                        oncurIndex = 0;
-                    }
-                    onfriend.HeaderImageIndex = oncurIndex;
-                    onfriend.Nickname = datas[1];
-                    onfriend.ShuoShuo = datas[3];
-                    _frm.Invoke(new delAddFriend(_frm.addUcf), onfriend);
-                    break;
+                        if (datas.Length != 4)
+                        {
+                            continue;
+                        }
+                        Friend onfriend = new Friend();
+                        int oncurIndex = Convert.ToInt32(datas[2]);
+                        if (oncurIndex < 0 || oncurIndex >= _frm.ilHeaderImage.Images.Count)
+                        {
+                            oncurIndex = 0;
+                        }
+                        onfriend.HeaderImageIndex = oncurIndex;
+                        onfriend.Nickname = datas[1];
+                        onfriend.ShuoShuo = datas[3];
+                        onfriend.IP = ipep.Address;
+                        _frm.Invoke(new delAddFriend(_frm.addUcf), onfriend);
+                        break;
+                    case "LOGOUT":
+                        Panel pnlst = _frm.getPanl();
+                        int deleIndex = 0;
+                        //根据当前下线人的ip地址，找到pn中对应的用户控件，删除；
+                        foreach (UCFriend ltUcf in pnlst.Controls)
+                        {
+                            if (ltUcf.CurFriend.IP.ToString() == ipep.Address.ToString()) 
+                            {
+                                pnlst.Controls.Remove(ltUcf);
+                                break;
+                            }
+                            deleIndex++;
+                        }
+                        //让其下面的每一个用户控件对象依次上移
+                        for (int i = deleIndex; i < pnlst.Controls.Count; i++)
+                        {
+                            pnlst.Controls[i].Top = i * pnlst.Controls[0].Height;
+                        }
+                        break;
                     default:
                         break;
                 }

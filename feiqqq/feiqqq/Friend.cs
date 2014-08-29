@@ -18,5 +18,6 @@ namespace feiqqq
         public string ShuoShuo { get; set; }
         public IPAddress IP { get; set; }
         public bool IsOpen { get; set; }
+        public FrmChat Frmchatting { get; set; }
     }
 }

@@ -28,11 +28,12 @@ namespace feiqqq
         {
             InitializeComponent();
         }
-        public FrmChat(Friend f)
+        public FrmChat(Friend f )
         {
             InitializeComponent();
             this.ChatFriend=f;
         }
+  
         private void FrmChat_Load(object sender, EventArgs e)
         {
             //Friend friend=new Friend();
@@ -48,10 +49,12 @@ namespace feiqqq
         private void btnSend_Click(object sender, EventArgs e)
         {
             UdpClient uc = new UdpClient();
-            string msg = "MSG|" + this.txtSendContent.Text + "|傻逼杰";
+            string msg = "MSG|" + this.txtSendContent.Text + "|王凯";
             byte[] bmsg = Encoding.Default.GetBytes(msg);
             IPEndPoint ipep = new IPEndPoint(ChatFriend.IP, 9527);
             uc.Send(bmsg, bmsg.Length, ipep);
+            this.txtChattingContent.AppendText("我:\r\n    "  + this.txtSendContent.Text + "\r\n");
+            this.txtSendContent.Text = "";
         }
 
 

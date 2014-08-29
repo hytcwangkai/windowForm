@@ -14,6 +14,17 @@ namespace feiqqq
 {
     public partial class Form1 : Form
     {
+
+        public void openChat(Friend f,string msg)
+        {
+            FrmChat frm = new FrmChat(f);
+            f.Frmchatting = frm;
+            frm.Show();
+            f.IsOpen = true;
+            f.Frmchatting.txtChattingContent.AppendText(f.Nickname + ":" + msg + "\r\n");
+                               
+        }
+       public List<Friend> onlineFriends=new List<Friend>();
        public Panel getPanl()
        {
            return this.plFriendsList;
@@ -51,18 +62,27 @@ namespace feiqqq
             ucf.Frm = this;
             ucf.CurFriend = f;
             ucf.Top = this.plFriendsList.Controls.Count * ucf.Height;
-           ucf.myDBClick += ucf_myDBClick;
+            ucf.myDBClick += ucf_myDBClick;
             this.plFriendsList.Controls.Add(ucf);
+            this.onlineFriends.Add(ucf.CurFriend);
         }
         void ucf_myDBClick(object sender, EventArgs e) 
         {
             UCFriend ucf = (UCFriend)sender;
-            if (ucf.CurFriend.IsOpen == false)
+            foreach (Friend olucf in onlineFriends)
             {
-                FrmChat frm = new FrmChat(ucf.CurFriend);
-                frm.Show();
-                ucf.CurFriend.IsOpen = true;
+                if (olucf.IP.ToString() == ucf.CurFriend.IP.ToString())
+                {
+                    if (olucf.IsOpen == false)
+                    {
+                        FrmChat frm = new FrmChat(ucf.CurFriend);
+                        ucf.CurFriend.Frmchatting = frm;
+                        frm.Show();
+                        olucf.IsOpen = true;
+                    }
+                }
             }
+          
         }
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {

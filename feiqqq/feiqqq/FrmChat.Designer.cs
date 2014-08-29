@@ -76,7 +76,7 @@
         #endregion
 
         private System.Windows.Forms.Panel panel1;
-        private System.Windows.Forms.TextBox txtChattingContent;
+        public System.Windows.Forms.TextBox txtChattingContent;
         private System.Windows.Forms.Button btnSend;
         private System.Windows.Forms.TextBox txtSendContent;
     }

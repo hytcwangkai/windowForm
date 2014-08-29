@@ -9,7 +9,8 @@ namespace feiqqq
 {
     public class Operation
     {
-        public delegate void delAddFriend(Friend friend); 
+        public delegate void delAddFriend(Friend friend);
+        public delegate void openChat(Friend friend,string msg); 
         private Form1 _frm;
         public Operation(Form1 frm)
         {
@@ -106,6 +107,31 @@ namespace feiqqq
                         for (int i = deleIndex; i < pnlst.Controls.Count; i++)
                         {
                             pnlst.Controls[i].Top = i * pnlst.Controls[0].Height;
+                        }
+                        break;
+                    case "MSG":
+                        if (datas.Length != 3)
+                        {
+                            continue;
+                        }
+                        foreach (Friend olucf  in _frm.onlineFriends)
+                        {
+                            if(ipep.Address.ToString()==olucf.IP.ToString())
+                            {
+                                if (olucf.IsOpen == true)
+                                {
+                                    olucf.Frmchatting.txtChattingContent.AppendText(datas[2] + ":" + datas[1]+"\r\n");
+                                }
+                                if(olucf.IsOpen==false)
+                                {
+                                    object[] openPars = new object[2];
+                                    openPars[0] = olucf;
+                                    openPars[1] = datas[1];
+                                    _frm.Invoke(new openChat(_frm.openChat),openPars);
+                                 }
+                                break;
+                            }
+                           
                         }
                         break;
                     default:
